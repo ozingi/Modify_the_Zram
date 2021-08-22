@@ -1,4 +1,4 @@
-﻿PRIVE_APP='/data/resource-cache/priv-app.list'
+﻿PRIVE_APP='/data/resource-cache/vendor.list'
 if [ -f "$PRIVE_APP" ]; then
   ui_print " "
   ui_print "   Removing $PRIVE_APP"

@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{05C278
 		common\service.sh = common\service.sh
 		common\system.prop = common\system.prop
 		common\unity_install.sh = common\unity_install.sh
+		common\unity_install.sh.bak = common\unity_install.sh.bak
 		common\unity_uninstall.sh = common\unity_uninstall.sh
 		common\unity_upgrade.sh = common\unity_upgrade.sh
 	EndProjectSection
@@ -60,6 +61,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "android", "android", "{3727
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "system", "system", "{DC64D1B3-6C84-4714-8EBE-B85118A3C94E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendor", "vendor", "{5C910E23-6225-48F1-93C3-6EFDDE9F117E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{DE9E9C03-6144-4EDB-87F2-9FC4E51D621E}"
+	ProjectSection(SolutionItems) = preProject
+		system\vendor\bin\init.qcom.post_boot.sh = system\vendor\bin\init.qcom.post_boot.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +86,8 @@ Global
 		{56E984B0-500E-454D-B610-32D39DF45A22} = {51D5AD27-765A-4A21-9CBD-7AD2A325FEDA}
 		{372761AC-3ECE-4A90-9847-1BF1B2ED91D8} = {56E984B0-500E-454D-B610-32D39DF45A22}
 		{DC64D1B3-6C84-4714-8EBE-B85118A3C94E} = {4BA71F79-35C1-4DB9-93C6-A21C9CD0429B}
+		{5C910E23-6225-48F1-93C3-6EFDDE9F117E} = {DC64D1B3-6C84-4714-8EBE-B85118A3C94E}
+		{DE9E9C03-6144-4EDB-87F2-9FC4E51D621E} = {5C910E23-6225-48F1-93C3-6EFDDE9F117E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A682400-E9CD-4D0B-A6C8-FE883CD2409B}

@@ -66,11 +66,11 @@ REPLACE="
 
 print_modname() {
   ui_print "************************************************************"
-  ui_print "   microG_playStore_GoogleContactsSync_installer    "
+  ui_print "   Modify_the_Zram    "
   ui_print "************************************************************"
   ui_print "༼ つ ◕_◕ ༽つ我在 @深夜听表/Github: taoaoooo/qq群: 273145623"
   ui_print "༼ つ ◕_◕ ༽つFollow @深夜听表/Github: taoaoooo/QQ group: 273145623"
-  ui_print " "
+  ui_print "本模块支持Zram大小设置为2G、4G、或者关闭Zram功能也可以自定义大小"
   unity_main # Don't change this line
 }
 
@@ -102,8 +102,8 @@ unity_custom() {
 
 # Custom Functions for Install AND Uninstall - You can put them here
 on_install() {
-   ui_print "- 安装完成后，可以重新启动使Zram其生效"
-   ui_print "  Once installed, you can restart microG to take effect"
+   ui_print "- 安装完成后，可以重新启动使模块生效"
+   ui_print "  After the installation is complete, you can restart the module for it to take effect"
    ui_print " ༼ つ ◕_◕ ༽つ"
    
 unzip -o "$ZIPFILE" 'system/*' -d $MODPATH >&2

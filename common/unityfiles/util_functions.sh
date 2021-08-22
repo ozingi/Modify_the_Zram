@@ -741,13 +741,13 @@ unity_main() {
       ui_print "  ! Mod present in system but not in ramdisk!"
       ui_print "  ! Running upgrade..."
       unity_upgrade
-    elif [ $(grep_prop versionCode $MOD_VER) -ge $(grep_prop versionCode $TMPDIR/module.prop) ]; then
-      ui_print "-  !当前安装版本小于等于已安装版本!"
+    elif [ $(grep_prop versionCode $MOD_VER) -gt $(grep_prop versionCode $TMPDIR/module.prop) ]; then
+      ui_print "-  !当前安装版本小于已安装版本!"
       ui_print "  ! Current or newer version detected!"
       unity_uninstall
     else
-      ui_print "-  !当前安装版本高于已安装版本，进行升级...!"
-      ui_print "  ! Older version detected! Upgrading..."
+      ui_print "-  !当前安装版本高于或等于已安装版本，进行升级或修复...!"
+      ui_print "  ! The current installed version is later than or equal to the installed version, upgrade or repair..."
       unity_upgrade
     fi
   else

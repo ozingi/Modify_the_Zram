@@ -1,0 +1,158 @@
+﻿OIFS=$IFS; IFS=\|
+
+case $(echo $(basename $ZIPFILE) | tr '[:upper:]' '[:lower:]') in
+	*clearG1*) zRam=true; clearG1=true; clearG2=false; clearG3=false;;
+	*clearG2*) zRam=true; clearG1=false; clearG2=true; clearG3=false;;
+	*clearG3*) zRam=true; clearG1=false; clearG2=false; clearG3=true;;
+	*nzRam*) zRam=false; clearG1=false; clearG2=false; clearG3=false;;
+esac
+case $(echo $(basename $ZIPFILE) | tr '[:upper:]' '[:lower:]') in
+	*nk*) NK=true;;
+esac
+IFS=$OIFS
+
+
+			if
+		 [ -z $zRam ] || [ -z $clearG1 ] || [ -z $clearG2 ] || [ -z $clearG3 ]; then
+			echo "                _                          ______";
+			echo "   ____ ___    (_)  _____   _____  ____   / ____/";
+			echo "  / __ \`__ \  / /  / ___/  / ___/ / __ \ / / __  ";
+			echo " / / / / / / / /  / /__   / /    / /_/ // /_/ /  ";
+			echo "/_/ /_/ /_/ /_/   \___/  /_/     \____/ \____/   ";
+			echo "                                                 ";
+			ui_print "- 准备好配置zram选项了吗 ?"
+			ui_print "   Ready to configure your zram options?"
+			ui_print "- 按下音量加=是，按下音量减=否,和退出"
+			ui_print "   Press  Vol+ = Yes , Press Vol- = No, and exit "
+			if $VKSEL; then
+				ui_print " "
+				ui_print " "
+				ui_print " "
+				ui_print "- 是否需要开启4G大小的zram？"
+#				ui_print "   Pick among 1, 2 or 3" 
+				ui_print "   Do I need to turn on a 4GB zram?" 
+				ui_print " "
+#				ui_print "   Vol+ = Icon Pack-1, Vol- = Show next"
+				ui_print "- 按下音量加=是，按下音量减=显示下一个选项"
+				ui_print "   Vol+ = Yes, Vol- = Show the next option"
+				zRam=true
+				if $VKSEL; then
+					clearG1=true
+					clearG2=false
+					clearG3=false
+					ui_print "   111111111111111111"
+				else
+				    ui_print " "
+				    ui_print " "
+					ui_print "- 是否需要自己定义zram大小或者直接关闭zram？"
+					ui_print " "
+					ui_print "   Do you need to define your own zram size or just turn off zram?" 
+					ui_print "   Vol+ = Yes, custom, Vol- = Close the zram"
+					if $VKSEL; then
+						clearG1=false
+						clearG2=true
+						clearG3=false	
+					else
+						clearG1=false
+						clearG2=false
+						clearG3=true	
+#						ui_print "- 你选择了直接安装microG,正在安装中..."
+#						ui_print "   You chose to install microG directly, it is being installed..."
+					fi
+				fi
+			else
+				zRam=false
+				ui_print "- 安装被取消，模块已卸载" 
+				ui_print "  Installation cancelled, module uninstalled" 
+				exit 1
+			fi
+		else
+			ui_print "- 模块出错，意外退出" 
+	     	ui_print "  The microG has been installed successfully" 
+		fi
+	
+
+#ui_print "- Follow github：taoaoooo/qq群：273145623"
+#ui_print "  Follow Github: taoaoooo/QQ group: 273145623"
+
+mkdir -p $TMPDIR/system/vendor/bin
+ui_print "   就离谱，出错了"
+if $zRam; then
+	ui_print ">"
+	if $clearG1; then
+		ui_print "-  挂载根目录..."
+		mount -o rw,remount / || echo "error code:82 lines"
+		ui_print "-  Copy the file to be operated..."
+		cp -f /system/vendor/bin/init.qcom.post_boot.sh $TMPDIR/system/vendor/bin || echo "error code:84 lines"
+		#---------------------下面是你可以修改的参数------------------
+		#替换的文件都在这个路径下面
+		FIND_PATH="$TMPDIR/system/vendor/bin"
+		#替换的文件，替换所有文件指定为""
+#		cp -f $TMPDIR/apk/IP1.apk $TMPDIR/system/product/overlay
+		FILE_NAME="init.qcom.post_boot.sh"
+		#要替换的串
+		SOURCE="echo\(.*\)\/sys\/block\/zram0\/disksize"
+		#目的串
+		DEST="echo 4294967296 \> \/sys\/block\/zram0\/disksize"
+		#--------------------上面是你可以修改的参数--------------------
+
+		makefilepath=$(find $FIND_PATH -name $FILE_NAME)
+		for way in $makefilepath
+		do
+		echo $way
+		#-!代表下面内容是输入，而不从键盘输入
+		vim -e $way<<-!
+		#要注意下面的$前面要加上\，否则会被解析为变量
+		:%s/$SOURCE/$DEST/g
+		:wq
+		!
+#		卸载gsf
+		ui_print "-  恢复根目录只读..."
+		mount -o ro,remount /
+
+	elif $clearG2; then
+#		ui_print "-  Icon Pack 2 selected -"
+		ui_print "-  挂载根目录..."
+		mount -o rw,remount / || echo "error code:156 lines"
+		ui_print "-  Copy the file to be operated..."
+		cp -f /system/vendor/bin/init.qcom.post_boot.sh $TMPDIR/system/vendor/bin || echo "error code:158 lines"
+#			cp -f $TMPDIR/apk/B2.apk $TMPDIR/system/product/overlay
+#		cp -f $TMPDIR/apk/IP2.apk $TMPDIR/system/product/overlay
+	elif $clearG3; then
+		ui_print "-  挂载根目录..."
+		mount -o rw,remount / || echo "error code:82 lines"
+		ui_print "-  Copy the file to be operated..."
+		cp -f /system/vendor/bin/init.qcom.post_boot.sh $TMPDIR/system/vendor/bin || echo "error code:84 lines"
+		#---------------------下面是你可以修改的参数------------------
+		#替换的文件都在这个路径下面
+		FIND_PATH="$TMPDIR/system/vendor/bin"
+		#替换的文件，替换所有文件指定为""
+#		cp -f $TMPDIR/apk/IP1.apk $TMPDIR/system/product/overlay
+		FILE_NAME="init.qcom.post_boot.sh"
+		#要替换的串
+		SOURCE="echo\(.*\)\/sys\/block\/zram0\/disksize"
+		#目的串
+		DEST="echo 0 \> \/sys\/block\/zram0\/disksize"
+		#--------------------上面是你可以修改的参数--------------------
+
+		makefilepath=$(find $FIND_PATH -name $FILE_NAME)
+		for way in $makefilepath
+		do
+		echo $way
+		#-!代表下面内容是输入，而不从键盘输入
+		vim -e $way<<-!
+		#要注意下面的$前面要加上\，否则会被解析为变量
+		:%s/$SOURCE/$DEST/g
+		:wq
+		!
+		ui_print "-  恢复根目录只读..."
+		mount -o ro,remount /
+	fi
+fi
+
+
+
+
+ui_print " "
+ui_print " "
+ui_print "- Done  -"
